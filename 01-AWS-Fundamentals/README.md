@@ -102,6 +102,7 @@ Region: us-east-1
 - DNS service (Route 53)
 - AWS WAF and Shield
 - Lambda@Edge
+    - The primary difference between AWS Lambda and AWS Lambda@Edge lies in where they execute and how they are triggered. AWS Lambda runs in a single, specific AWS region that you choose, whereas AWS Lambda@Edge automatically replicates your code and runs it globally across AWS regional edge locations closer to your end-users to reduce latency
 
 **Exam Tip**: 🎯 Edge Locations ≠ Regions. They're for caching and low-latency access.
 
