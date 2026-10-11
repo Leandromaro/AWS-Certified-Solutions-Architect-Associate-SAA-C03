@@ -1543,7 +1543,47 @@ The most important thing to remember:
 
 They act as guardrails.
 
-### Example
+## AWS SCP (Service Control Policy)
+
+- SCPs are used in AWS Organizations to define the maximum permissions available to accounts.
+- SCPs **do not grant permissions**; IAM policies are still required to allow actions.
+- Think of SCPs and IAM policies as a **double filter**: an action must be allowed by both.
+
+### Simple Example
+
+Imagine an IAM user has `AdministratorAccess`, but an SCP denies the action `ec2:TerminateInstances`.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": "ec2:TerminateInstances",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+Even though the IAM policy allows the user to perform all EC2 actions, the SCP explicitly denies terminating EC2 instances.
+
+**Result:** The user cannot terminate EC2 instances because the SCP blocks the action.
+
+### Double Filter Summary
+
+| SCP | IAM Policy | Result |
+|---|---|---|
+| Allows action | Allows action | Allowed (if no other restrictions apply) |
+| Allows action | Does not allow action | Denied |
+| Denies action | Allows action | Denied |
+| Denies action | Does not allow action | Denied |
+
+**Important:** An SCP `Allow` does not grant permissions. It only defines what the organization permits. IAM policies must still grant the required permissions.
+
+**SAA-C03 Exam Tip:** An explicit `Deny` in an SCP overrides an IAM `Allow`. SCPs do not restrict the AWS Organizations management account or service-linked roles.
+
+### Extra Example
 
 Suppose IAM allows:
 
