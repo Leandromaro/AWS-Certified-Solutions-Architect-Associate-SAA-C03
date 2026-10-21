@@ -148,40 +148,6 @@ Legacy application                → CLB
 2. **Asynchronous**: S3, SNS, EventBridge
 3. **Event Source Mapping**: SQS, Kinesis, DynamoDB Streams
 
-### Pricing
-- $0.20 per 1M requests
-- $0.00001667 per GB-second
-
-
-# AWS Elastic Load Balancing (ELB)
-
-**ELB** distributes incoming traffic across multiple targets such as EC2 instances, containers, and IP addresses.
-
-| Load Balancer | Layer | Main Use |
-|---|---|---|
-| **ALB** | Layer 7 | HTTP/HTTPS, APIs, microservices |
-| **NLB** | Layer 4 | TCP/UDP, high performance, static IPs |
-| **GWLB** | Layer 3/7 | Firewalls, IDS/IPS, security appliances |
-| **CLB** | Layer 4/7 | Legacy applications |
-
-### Quick Guide
-
-- **ALB** → Intelligent HTTP/HTTPS routing
-- **NLB** → High-performance TCP/UDP
-- **GWLB** → Security appliance integration
-- **CLB** → Legacy
-
----
-
-# AWS Lambda
-
-## Limits
-
-- Max execution: **15 minutes**
-- Memory: **128 MB - 10 GB**
-- `/tmp`: **512 MB - 10 GB**
-- Concurrent executions: **1,000 default**
-
 ## Invocation Types
 
 ### 1. Synchronous
