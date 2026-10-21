@@ -14,8 +14,16 @@ AWS compute services for SAA-C03 exam: EC2, Lambda, containers, Auto Scaling, an
 2. **AWS Lambda** - Serverless functions
 3. **Auto Scaling** - Automatic capacity management
 4. **Elastic Load Balancing** - Distribute traffic
-5. **ECS/EKS/Fargate** - Container services
-6. **Elastic Beanstalk** - PaaS deployment
+5. **ECS/EKS/Fargate** - Container services 
+7. **Elastic Beanstalk** - PaaS deployment
+
+ - Amazon ECS and EKS are container orchestrators, while AWS Fargate is a serverless compute engine that runs containers for either orchestrator. ECS is Amazon's proprietary, low-overhead orchestrator ($0 control plane fee), whereas EKS is managed Kubernetes ($0.10/hr control plane fee) for cross-platform portability and rich ecosystem tools.
+
+ - Core Concept: Orchestration vs. Compute
+
+    • Amazon ECS (Elastic Container Service): AWS-native, proprietary orchestrator. It uses custom concepts like tasks, task definitions, and services, offering deep integration with AWS features and a low learning curve.
+    • Amazon EKS (Elastic Kubernetes Service): Managed upstream Kubernetes. It uses standard Kubernetes primitives (pods, deployments, Helm charts) and provides high portability across different clouds or on-premises environments.
+    • AWS Fargate: A serverless compute layer. It is not a standalone orchestrator; instead, it replaces self-managed EC2 virtual machines so you run tasks (ECS) or pods (EKS) without provisioning or patching servers
 
 ---
 
