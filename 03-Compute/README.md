@@ -83,7 +83,59 @@ AWS compute services for SAA-C03 exam: EC2, Lambda, containers, Auto Scaling, an
 - Cross-zone load balancing
 - SSL/TLS termination
 
+# AWS Elastic Load Balancing (ELB)
+
+**Elastic Load Balancing (ELB)** distributes incoming traffic across multiple targets such as EC2 instances, containers, and IP addresses.
+
+AWS provides four types of load balancers:
+
+| Load Balancer | OSI Layer | Protocols | Main Use |
+|---|---|---|---|
+| **ALB** | Layer 7 | HTTP, HTTPS, gRPC | Web applications, APIs, microservices |
+| **NLB** | Layer 4 | TCP, UDP, TLS, QUIC | High-performance and low-latency applications |
+| **GWLB** | Layer 3/7 | IP, GENEVE | Firewalls and security appliances |
+| **CLB** | Layer 4/7 | TCP, SSL, HTTP, HTTPS | Legacy applications |
+
+## Network Load Balancer (NLB)
+
+- Operates at **Layer 4**.
+- Supports **TCP, UDP, TLS, and QUIC**.
+- Designed for **high performance and very low latency**.
+- Supports **static IP addresses and Elastic IPs**.
+- Suitable for applications that require large amounts of network traffic.
+
+> **NLB = high-performance network-level load balancing**
+
+## Gateway Load Balancer (GWLB)
+
+- Used to deploy and scale **third-party virtual network appliances**.
+- Commonly used with:
+  - Firewalls
+  - IDS/IPS
+  - Security appliances
+- Uses **GENEVE** for traffic encapsulation.
+- Allows traffic to be transparently inspected by network appliances.
+
+> **GWLB = traffic inspection through network appliances**
+
+## Classic Load Balancer (CLB)
+
+- The **older generation** of AWS load balancers.
+- Supports both Layer 4 and basic Layer 7 functionality.
+- Mainly used for **legacy applications**.
+- For new architectures, prefer **ALB, NLB, or GWLB**.
+
+> **CLB = legacy load balancing**
+
+## Quick Decision Guide
+
+```text
+HTTP/HTTPS + intelligent routing → ALB
+TCP/UDP + high performance       → NLB
+Firewall / IDS / IPS              → GWLB
+Legacy application                → CLB
 ---
+```
 
 ## 4. AWS Lambda
 
