@@ -83,8 +83,6 @@ AWS compute services for SAA-C03 exam: EC2, Lambda, containers, Auto Scaling, an
 - Cross-zone load balancing
 - SSL/TLS termination
 
-# AWS Elastic Load Balancing (ELB)
-
 **Elastic Load Balancing (ELB)** distributes incoming traffic across multiple targets such as EC2 instances, containers, and IP addresses.
 
 AWS provides four types of load balancers:
@@ -154,6 +152,98 @@ Legacy application                → CLB
 - $0.20 per 1M requests
 - $0.00001667 per GB-second
 
+
+# AWS Elastic Load Balancing (ELB)
+
+**ELB** distributes incoming traffic across multiple targets such as EC2 instances, containers, and IP addresses.
+
+| Load Balancer | Layer | Main Use |
+|---|---|---|
+| **ALB** | Layer 7 | HTTP/HTTPS, APIs, microservices |
+| **NLB** | Layer 4 | TCP/UDP, high performance, static IPs |
+| **GWLB** | Layer 3/7 | Firewalls, IDS/IPS, security appliances |
+| **CLB** | Layer 4/7 | Legacy applications |
+
+### Quick Guide
+
+- **ALB** → Intelligent HTTP/HTTPS routing
+- **NLB** → High-performance TCP/UDP
+- **GWLB** → Security appliance integration
+- **CLB** → Legacy
+
+---
+
+# AWS Lambda
+
+## Limits
+
+- Max execution: **15 minutes**
+- Memory: **128 MB - 10 GB**
+- `/tmp`: **512 MB - 10 GB**
+- Concurrent executions: **1,000 default**
+
+## Invocation Types
+
+### 1. Synchronous
+
+The caller **waits for the response**.
+
+```text
+Client → Lambda → Response
+```
+
+Examples: API Gateway, CLI, ALB.
+
+> **Synchronous = call and wait.**
+
+### 2. Asynchronous
+
+The caller **does not wait** for Lambda to finish.
+
+```text
+Event → Lambda → Processing
+```
+
+Examples: S3, SNS, EventBridge.
+
+Lambda can automatically retry failed invocations.
+
+> **Asynchronous = send and continue.**
+
+### 3. Event Source Mapping
+
+Lambda **polls the event source** and processes records in batches.
+
+```text
+SQS / Kinesis / DynamoDB Streams
+              ↓
+           Lambda
+```
+
+Examples: SQS, Kinesis, DynamoDB Streams, MSK.
+
+> **Event Source Mapping = Lambda polls and processes batches.**
+
+## Quick Comparison
+
+| Type | Caller Waits? | Examples | Concept |
+|---|---|---|---|
+| **Synchronous** | Yes | API Gateway, CLI | Request → Response |
+| **Asynchronous** | No | S3, SNS, EventBridge | Background processing |
+| **Event Source Mapping** | No | SQS, Kinesis, DynamoDB Streams | Poll + batch |
+
+## SAA-C03 Tip
+
+```text
+HTTP/HTTPS routing → ALB
+TCP/UDP + performance → NLB
+Security appliances → GWLB
+Legacy → CLB
+
+Call + wait → Synchronous
+Send + continue → Asynchronous
+Poll + batch → Event Source Mapping
+```
 ---
 
 ## 5. Container Services
