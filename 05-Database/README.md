@@ -458,6 +458,7 @@ An order changes from `PENDING` to `SHIPPED`.
 
 ### What is Neptune?
 - Fully managed **graph database**
+  - "It is a fully managed graph database service by AWS, specifically designed to store and query highly connected datasets (nodes and edges, such as social networks, recommendation engines, fraud detection, or knowledge graphs). It uses graph query languages like Gremlin, openCypher, and SPARQL." 
 - Store billions of relations
 - Query graph with millisecond latency
 - **Multi-AZ**, Read Replicas
