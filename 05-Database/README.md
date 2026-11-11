@@ -485,6 +485,7 @@ An order changes from `PENDING` to `SHIPPED`.
 
 ### What is QLDB?
 - **Ledger database**
+  - (Quantum Ledger Database) is a fully managed, serverless ledger database developed by AWS.
 - **Immutable** system of record
 - Cryptographically verifiable
 - Track all changes over time
@@ -497,6 +498,7 @@ An order changes from `PENDING` to `SHIPPED`.
 
 ### What is Timestream?
 - **Time series database**
+  - Amazon Timestream is a fully managed, serverless time-series database service offered by Amazon Web Services (AWS). 
 - Serverless, auto-scaling
 - Store and analyze trillions of events/day
 - 1000x faster, 1/10th cost vs relational databases
