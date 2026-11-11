@@ -224,16 +224,61 @@ AWS offers a comprehensive range of database services for different use cases. T
 - Solves Hot Key problem
 
 **DynamoDB Streams**
-- **Ordered stream of modifications** to table
-- Retention: **24 hours**
-- Use cases:
-  - React to changes in real-time
-  - Analytics
-  - Insert into derivative tables
-  - Cross-region replication
-- Can be read by:
-  - Lambda (Event Source Mapping)
-  - Kinesis Data Streams (newer)
+
+**What it is**
+- Captures a **time-ordered sequence of item-level changes** made to a DynamoDB table.
+- When an item is inserted, updated, or deleted, DynamoDB can write a corresponding record to the stream.
+- Think of it as a change log: it records *what changed* so another service can react without the application having to manually notify that service.
+- Streams capture changes to individual items, not arbitrary table queries or read operations.
+
+**Types of events**
+- **INSERT**: a new item is added to the table.
+- **MODIFY**: an existing item is updated.
+- **REMOVE**: an item is deleted.
+- Each stream record includes information such as the event type, the item's key, and a sequence number. Depending on the configured view type, it can also include the item's old and/or new contents.
+
+**Stream View Types**
+When enabling a stream, choose what information each record should contain:
+- **KEYS_ONLY**: only the item's key attributes.
+- **NEW_IMAGE**: the complete item as it looks after the change.
+- **OLD_IMAGE**: the complete item as it looked before the change.
+- **NEW_AND_OLD_IMAGES**: both the item before and after the change. Useful when you need to compare values and identify exactly what changed.
+
+**How it works with AWS Lambda**
+1. An application inserts, updates, or deletes an item in DynamoDB.
+2. DynamoDB Streams creates a record describing that change.
+3. A Lambda **Event Source Mapping** polls the stream and retrieves records in batches.
+4. Lambda runs your function with those records, allowing it to react to the change (for example, send an email or update another table).
+
+- Important: Lambda **polls** DynamoDB Streams through the event source mapping; DynamoDB does not directly invoke the function.
+- Stream processing is asynchronous. A consumer may process a record more than once, so Lambda logic should be **idempotent** (processing the same event again should not cause an incorrect duplicate effect).
+- Ordering is maintained for changes to an individual item. Do not assume one global ordering across every item in the table.
+
+**Retention and consumers**
+- Retention: **24 hours**. Records are removed after this period, so consumers must process them in time.
+- Common consumer: **AWS Lambda** through an Event Source Mapping.
+- DynamoDB changes can also be delivered to **Kinesis Data Streams** using DynamoDB's Kinesis Data Streams integration, allowing other streaming consumers to process them.
+
+**Use cases**
+- **Real-time reactions**: send an order confirmation when a new order is inserted.
+- **Data synchronization**: update another table or system when an item changes.
+- **Derived tables**: maintain summaries, counters, or search-oriented data based on source-table changes.
+- **Analytics and auditing**: process a sequence of changes for downstream analysis or record keeping.
+- **Cross-region replication**: DynamoDB Global Tables use streams as part of their replication mechanism.
+
+**Example**
+An order changes from `PENDING` to `SHIPPED`.
+- The table is updated with the new status.
+- The stream records a **MODIFY** event.
+- With **NEW_AND_OLD_IMAGES**, the record contains both `PENDING` (old image) and `SHIPPED` (new image).
+- A Lambda function can detect the status transition and notify the customer or update an order-history table.
+
+**Exam reminders**
+- DynamoDB Streams captures **INSERT, MODIFY, and REMOVE** events.
+- Records are retained for **24 hours**.
+- Know the four stream view types: **KEYS_ONLY, NEW_IMAGE, OLD_IMAGE, NEW_AND_OLD_IMAGES**.
+- Lambda reads records using an **Event Source Mapping** (it polls the stream).
+- Streams are commonly used for event-driven processing and are used by **DynamoDB Global Tables**.
 
 **Global Tables**
 - **Multi-region, multi-active** replication
